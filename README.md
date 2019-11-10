@@ -57,6 +57,8 @@ except CubeTimeoutError:
 ## Future Work
 - Requests for `meta`
 - Comprehensive Documentation
+- Tests
+- Auto-formatting
 
 ## License
 
