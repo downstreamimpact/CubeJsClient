@@ -11,7 +11,6 @@ TOKEN_TTL = {"days": 1}
 CUBE_LOAD_REQUEST_TIMEOUT = 60
 CUBE_LOAD_WAITING_MAX_REQUESTS = 50
 CUBE_LOAD_WAITING_INTERVAL = 1
-LIMIT_DEFAULT = 10000
 
 
 class CubeJsClient:
@@ -21,7 +20,6 @@ class CubeJsClient:
     _load_request_timeout = None
     _load_waiting_max_requests = None
     _load_waiting_interval = None
-    _limit_default = None
     _token_ttl = None
     _add_headers = {}
 
@@ -33,7 +31,6 @@ class CubeJsClient:
         load_waiting_max_requests=CUBE_LOAD_WAITING_MAX_REQUESTS,
         load_waiting_interval=CUBE_LOAD_WAITING_INTERVAL,
         token_ttl=None,
-        limit_default=LIMIT_DEFAULT,
         add_headers=None,
     ):
         self._endpoint = endpoint
@@ -41,7 +38,6 @@ class CubeJsClient:
         self._load_request_timeout = load_request_timeout
         self._load_waiting_max_requests = load_waiting_max_requests
         self._load_waiting_interval = load_waiting_interval
-        self._limit_default = limit_default
         if token_ttl:
             self._token_ttl = token_ttl
         else:
