@@ -25,15 +25,21 @@ client.load(
     request_body # required - json request to send to cube.js
 )
 ```
+_Note_: Might raise a `CubeJsClient.CubeError` if the Cube rejects the request
+_Note_: Might raise a `CubeJsClient.CubeTimeoutError` if the load exhausts the `load_waiting_max_requests`
 
 ## Example
 ```python
-from CubeJsClient import CubeJsClient
+from CubeJsClient import CubeJsClient, CubeError, CubeTimeoutError
 
 my_client = CubeJsClient("http://my_cubejs_server.com/", "theApiToken", add_headers={'user_id': 1})
-results = my_client.load({"measures": ["Cube.count"],"dimensions": ["Cube.dimension"]})
-
-print(results)
+try:
+    results = my_client.load({"measures": ["Cube.count"],"dimensions": ["Cube.dimension"]})
+    print(results)
+except CubeError:
+    print("Cube rejected")
+except CubeTimeoutError:
+    print("Request to Cube timed out")
 ```
 
 ## Future Work
