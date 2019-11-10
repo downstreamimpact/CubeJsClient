@@ -25,7 +25,9 @@ client.load(
     request_body # required - json request to send to cube.js
 )
 ```
+
 _Note_: Might raise a `CubeJsClient.CubeError` if the Cube rejects the request
+
 _Note_: Might raise a `CubeJsClient.CubeTimeoutError` if the load exhausts the `load_waiting_max_requests`
 
 ## Example
