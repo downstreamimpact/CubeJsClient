@@ -69,14 +69,25 @@ class CubeJsClient:
         Returns:
             list
         """
-        return self.make_load_request(
-            self.token, request_body, remaining_requests=self._load_waiting_max_requests
+        return self.make_request(
+            'load', self.token, request_body, remaining_requests=self._load_waiting_max_requests
         )
 
-    def make_load_request(self, token, request_body, remaining_requests=1):
+    def sql(self, request_body):
+        """
+        Runs a sql request to Cube.js
+        Returns:
+            list
+        """
+        return self.make_request(
+            'sql', self.token, request_body, remaining_requests=self._load_waiting_max_requests
+        )
+
+    def make_request(self, endpoint, token, request_body, remaining_requests=1):
         """
         Issues the request to cube.js
         Args:
+            endpoint: str - sql or load
             token: str - token
             request_body: dict - request to Cube.js
             remaining_requests: how many more requests to make
@@ -89,7 +100,7 @@ class CubeJsClient:
         encoded_str_body = urllib.parse.quote(str_body)
         while data_response is None and remaining_requests > 0:
             try:
-                url = f"{self._endpoint}/cubejs-api/v1/load?query={encoded_str_body}"
+                url = f"{self._endpoint}/cubejs-api/v1/{endpoint}?query={encoded_str_body}"
                 remaining_requests -= 1
                 response = requests.get(
                     url,

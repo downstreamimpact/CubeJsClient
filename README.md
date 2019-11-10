@@ -20,6 +20,7 @@ client = CubeJsClient(
 ```
 
 #### load
+[load operation](https://cube.dev/docs/@cubejs-client-core#cubejs-api-load)
 ```python
 client.load(
     request_body # required - json request to send to cube.js
@@ -29,6 +30,15 @@ client.load(
 _Note_: Might raise a `CubeJsClient.CubeError` if the Cube rejects the request
 
 _Note_: Might raise a `CubeJsClient.CubeTimeoutError` if the load exhausts the `load_waiting_max_requests`
+
+
+#### sql
+[sql operation](https://cube.dev/docs/@cubejs-client-core#cubejs-api-sql)
+```python
+client.sql(
+    request_body # required - json request to send to cube.js
+)
+```
 
 ## Example
 ```python
@@ -45,7 +55,7 @@ except CubeTimeoutError:
 ```
 
 ## Future Work
-- Requests for `sql` and for `meta`
+- Requests for `meta`
 - Comprehensive Documentation
 
 ## License
