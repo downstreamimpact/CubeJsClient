@@ -26,15 +26,15 @@ class CubeJsClient:
     _add_headers = {}
 
     def __init__(
-            self,
-            endpoint,
-            secret,
-            load_request_timeout=CUBE_LOAD_REQUEST_TIMEOUT,
-            load_waiting_max_requests=CUBE_LOAD_WAITING_MAX_REQUESTS,
-            load_waiting_interval=CUBE_LOAD_WAITING_INTERVAL,
-            token_ttl=None,
-            limit_default=LIMIT_DEFAULT,
-            add_headers=None
+        self,
+        endpoint,
+        secret,
+        load_request_timeout=CUBE_LOAD_REQUEST_TIMEOUT,
+        load_waiting_max_requests=CUBE_LOAD_WAITING_MAX_REQUESTS,
+        load_waiting_interval=CUBE_LOAD_WAITING_INTERVAL,
+        token_ttl=None,
+        limit_default=LIMIT_DEFAULT,
+        add_headers=None,
     ):
         self._endpoint = endpoint
         self._secret = secret
@@ -98,13 +98,19 @@ class CubeJsClient:
                 response = requests.get(
                     url,
                     timeout=CUBE_LOAD_REQUEST_TIMEOUT,
-                    headers={"Authorization": token, **self._add_headers}
+                    headers={"Authorization": token, **self._add_headers},
                 )
                 if response.status_code != 200:
                     if response.text:
-                        raise CubeError("bad return status code: {} - {}".format(response.status_code, response.text))
+                        raise CubeError(
+                            "bad return status code: {} - {}".format(
+                                response.status_code, response.text
+                            )
+                        )
                     else:
-                        raise CubeError("bad return status code: {}".format(response.status_code))
+                        raise CubeError(
+                            "bad return status code: {}".format(response.status_code)
+                        )
 
                 json_res = response.json()
 
@@ -112,7 +118,9 @@ class CubeJsClient:
                     if json_res["error"] == "Continue wait":
                         time.sleep(self._load_waiting_interval)
                     else:
-                        raise CubeError("unrecognized error: {}".format(json_res["error"]))
+                        raise CubeError(
+                            "unrecognized error: {}".format(json_res["error"])
+                        )
                 else:
                     data_response = json_res["data"]
                     return data_response
