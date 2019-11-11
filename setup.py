@@ -10,9 +10,9 @@ setup(
     license="MIT",
     packages=["CubeJsClient"],
     install_requires=[
-        "cryptography==2.8",
-        "PyJWT==1.7.1",
-        "requests==2.22.0",
+        "cryptography>=2.5",
+        "PyJWT>=1.6.4",
+        "requests>=2.20.0",
     ],
     download_url='https://github.com/downstreamimpact/CubeJsClient/tarball/master',
     zip_safe=False,
