@@ -9,7 +9,7 @@
 #### init
 ```python
 client = CubeJsClient(
-    endpoint, # required - the running cube.js server
+    server, # required - the running cube.js server
     secret, # required - the api token or secret needed for requests
     load_request_timeout=60, # optional - timeout for a single request to cube.js server
     load_waiting_max_requests=50, # optional - number of requests to make while waiting for a response
@@ -53,7 +53,7 @@ client = MyClientClass(server, api_token)
 
 ## Example
 ```python
-from CubeJsClient import CubeJsClient, CubeError, CubeTimeoutError
+from cube_js_client import CubeJsClient, CubeError, CubeTimeoutError
 
 my_client = CubeJsClient("http://my_cubejs_server.com/", "theApiToken", add_headers={'user_id': 1})
 try:

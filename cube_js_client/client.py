@@ -11,12 +11,15 @@ TOKEN_TTL = {"days": 1}
 CUBE_LOAD_REQUEST_TIMEOUT = 60
 CUBE_LOAD_WAITING_MAX_REQUESTS = 50
 CUBE_LOAD_WAITING_INTERVAL = 1
+CUBE_DEFAULT_BASE_PATH = 'cubejs-api'
 
 
 class CubeJsClient:
-    _endpoint = None
+    _server = None
+    _base_path = None
     _secret = None
     _token = None
+    _base_path = None
     _load_request_timeout = None
     _load_waiting_max_requests = None
     _load_waiting_interval = None
@@ -25,16 +28,18 @@ class CubeJsClient:
 
     def __init__(
         self,
-        endpoint,
+        server,
         secret,
+        base_path=CUBE_DEFAULT_BASE_PATH,
         load_request_timeout=CUBE_LOAD_REQUEST_TIMEOUT,
         load_waiting_max_requests=CUBE_LOAD_WAITING_MAX_REQUESTS,
         load_waiting_interval=CUBE_LOAD_WAITING_INTERVAL,
         token_ttl=None,
         add_headers=None,
     ):
-        self._endpoint = endpoint
+        self._server = server
         self._secret = secret
+        self._base_path = base_path
         self._load_request_timeout = load_request_timeout
         self._load_waiting_max_requests = load_waiting_max_requests
         self._load_waiting_interval = load_waiting_interval
@@ -83,11 +88,11 @@ class CubeJsClient:
             'sql', self.token, request_body, remaining_requests=self._load_waiting_max_requests
         )
 
-    def make_request(self, endpoint, token, request_body, remaining_requests=1):
+    def make_request(self, server, token, request_body, remaining_requests=1):
         """
         Issues the request to cube.js
         Args:
-            endpoint: str - sql or load
+            server: str - sql or load
             token: str - token
             request_body: dict - request to Cube.js
             remaining_requests: how many more requests to make
@@ -100,7 +105,7 @@ class CubeJsClient:
         encoded_str_body = urllib.parse.quote(str_body)
         while data_response is None and remaining_requests > 0:
             try:
-                url = f"{self._endpoint}/cubejs-api/v1/{endpoint}?query={encoded_str_body}"
+                url = f"{self._server}/{self._base_path}/v1/{server}?query={encoded_str_body}"
                 remaining_requests -= 1
                 response = requests.get(
                     url,
