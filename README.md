@@ -40,6 +40,17 @@ client.sql(
 )
 ```
 
+#### logging
+To get visibility into logged events, override the log method and log however your app needs to log:
+```python
+class MyClientClass(CubeJsClient):
+    def log(self, level, msg, **log_variables):
+        print(f"[{level}] {msg}", log_variables)
+        
+
+client = MyClientClass(server, api_token)
+```
+
 ## Example
 ```python
 from CubeJsClient import CubeJsClient, CubeError, CubeTimeoutError

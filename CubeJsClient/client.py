@@ -108,6 +108,14 @@ class CubeJsClient:
                     headers={"Authorization": token, **self._add_headers},
                 )
                 if response.status_code != 200:
+                    self.log(
+                        "error",
+                        "make_load_request.error_status_code",
+                        remaining_requests=remaining_requests,
+                        request_body=request_body,
+                        status_code=response.status_code,
+                        response=response.text,
+                    )
                     if response.text:
                         raise CubeError(
                             "bad return status code: {} - {}".format(
@@ -125,12 +133,42 @@ class CubeJsClient:
                     if json_res["error"] == "Continue wait":
                         time.sleep(self._load_waiting_interval)
                     else:
+                        self.log(
+                            "error",
+                            "make_load_request.unrecognized_error",
+                            remaining_requests=remaining_requests,
+                            request_body=request_body,
+                            status_code=response.status_code,
+                            response=json_res,
+                        )
                         raise CubeError(
                             "unrecognized error: {}".format(json_res["error"])
                         )
                 else:
+                    self.log(
+                        "info",
+                        "make_load_request.success_response",
+                        remaining_requests=remaining_requests,
+                        request_body=request_body,
+                        status_code=response.status_code,
+                        response=json_res,
+                    )
                     data_response = json_res["data"]
                     return data_response
             except requests.exceptions.RequestException:
                 raise
         raise CubeTimeoutError()
+
+    def log(self, level, msg, **kwargs):
+        """
+        Logging function hook that should be overridden if you want logging
+        Issues the request to cube.js
+        Args:
+            level: str - the level to log at
+            msg: str - the message
+            kwargs: dict - any logging vars
+
+        Returns:
+            None
+        """
+        pass
