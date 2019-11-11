@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(
-    name="CubeJsClient",
+    name="cubejsclient",
     version="0.1.0",
     description="Cube.js Client for Python",
     url="https://github.com/downstreamimpact/CubeJsClient",
