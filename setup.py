@@ -1,10 +1,10 @@
 from setuptools import setup
 
 setup(
-    name="cube-js-client",
+    name="CubeJsClient",
     version="0.1.0",
-    description="Cube.js Client",
-    url="https://github.com/downstreamimpact/cube-js-client",
+    description="Cube.js Client for Python",
+    url="https://github.com/downstreamimpact/CubeJsClient",
     author="Matt Ferrante",
     author_email="matt@downstreamimpact.com",
     license="MIT",
