@@ -7,3 +7,4 @@ __pycache__/
 *.pyc
 build/*
 cube_js_client.egg-info/
+cubejsclient.egg-info/

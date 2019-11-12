@@ -1,6 +1,6 @@
 # CubeJsClient
 
-[Cube.js](https://github.com/cube-js/cube.js) client for python!
+[Cube.js](https://github.com/cube-js/cube.js) client for python! It assists in token management and abstracts the HTTP requests with retries. You still need to run an instance of the Cube.js Server to run requests against. This client does not provide any graphing functionality.
 
 ## Docs
 
@@ -8,9 +8,11 @@
 
 #### init
 ```python
+from cube_js_client import CubeJsClient,
 client = CubeJsClient(
     server, # required - the running cube.js server
     secret, # required - the api token or secret needed for requests
+    base_path='cubejs-api', # optional - the basePath, needed of not using the default
     load_request_timeout=60, # optional - timeout for a single request to cube.js server
     load_waiting_max_requests=50, # optional - number of requests to make while waiting for a response
     load_waiting_interval=1, # optional - time to wait between requests
@@ -27,9 +29,9 @@ client.load(
 )
 ```
 
-_Note_: Might raise a `CubeJsClient.CubeError` if the Cube rejects the request
+_Note_: Might raise a `cube_js_client.CubeError` if the Cube rejects the request
 
-_Note_: Might raise a `CubeJsClient.CubeTimeoutError` if the load exhausts the `load_waiting_max_requests`
+_Note_: Might raise a `cube_js_client.CubeTimeoutError` if the load exhausts the `load_waiting_max_requests`
 
 
 #### sql
@@ -73,4 +75,4 @@ except CubeTimeoutError:
 
 ## License
 
-Cube.js Client is [MIT licensed](./packages/cubejs-client-core/LICENSE).
+Cube.js Client is [MIT licensed](./LICENSE).

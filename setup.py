@@ -1,9 +1,14 @@
 from setuptools import setup
 
+with open("README.md", "r") as fh:
+    long_description = fh.read()
+
 setup(
     name="CubeJsClient",
     version="0.1.0",
     description="Cube.js Client for Python",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     url="https://github.com/downstreamimpact/CubeJsClient",
     author="Matt Ferrante",
     author_email="matt@downstreamimpact.com",
