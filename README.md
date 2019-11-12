@@ -81,6 +81,16 @@ Black Formatting
 $ black cube_js_client --config cube_js_client.toml
 ```
 
+Build
+```bash
+$ python3 setup.py sdist
+```
+
+Pypi Distribution
+```bash
+$ python3 -m twine upload dist/*
+```
+
 ##
 
 ## License
