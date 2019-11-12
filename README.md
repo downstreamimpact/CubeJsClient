@@ -73,6 +73,13 @@ except CubeTimeoutError:
 - Tests
 - Auto-formatting
 
+## Common Commands:
+
+Black Formatting
+```bash
+$ black cube_js_client --config cube_js_client.toml
+```
+
 ## License
 
 Cube.js Client is [MIT licensed](./LICENSE).
