@@ -72,6 +72,7 @@ except CubeTimeoutError:
 - Comprehensive Documentation
 - Tests
 - Auto-formatting
+- Buffering response handling
 
 ## Common Commands:
 
@@ -79,6 +80,8 @@ Black Formatting
 ```bash
 $ black cube_js_client --config cube_js_client.toml
 ```
+
+##
 
 ## License
 
