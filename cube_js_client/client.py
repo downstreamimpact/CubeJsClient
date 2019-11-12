@@ -11,7 +11,7 @@ TOKEN_TTL = {"days": 1}
 CUBE_LOAD_REQUEST_TIMEOUT = 60
 CUBE_LOAD_WAITING_MAX_REQUESTS = 50
 CUBE_LOAD_WAITING_INTERVAL = 1
-CUBE_DEFAULT_BASE_PATH = 'cubejs-api'
+CUBE_DEFAULT_BASE_PATH = "cubejs-api"
 
 
 class CubeJsClient:
@@ -59,9 +59,7 @@ class CubeJsClient:
         now = datetime.now()
         if not self._token or self._token_expiration <= now:
             self._token_expiration = now + timedelta(**self._token_ttl)
-            self._token = jwt.encode(
-                {"exp": self._token_expiration}, self._secret, algorithm="HS256"
-            )
+            self._token = jwt.encode({"exp": self._token_expiration}, self._secret, algorithm="HS256")
         return self._token
 
     @property
@@ -74,9 +72,7 @@ class CubeJsClient:
         Returns:
             list
         """
-        return self.make_request(
-            'load', self.token, request_body, remaining_requests=self._load_waiting_max_requests
-        )
+        return self.make_request("load", self.token, request_body, remaining_requests=self._load_waiting_max_requests)
 
     def sql(self, request_body):
         """
@@ -84,9 +80,7 @@ class CubeJsClient:
         Returns:
             list
         """
-        return self.make_request(
-            'sql', self.token, request_body, remaining_requests=self._load_waiting_max_requests
-        )
+        return self.make_request("sql", self.token, request_body, remaining_requests=self._load_waiting_max_requests)
 
     def make_request(self, server, token, request_body, remaining_requests=1):
         """
@@ -108,9 +102,7 @@ class CubeJsClient:
                 url = f"{self._server}/{self._base_path}/v1/{server}?query={encoded_str_body}"
                 remaining_requests -= 1
                 response = requests.get(
-                    url,
-                    timeout=CUBE_LOAD_REQUEST_TIMEOUT,
-                    headers={"Authorization": token, **self._add_headers},
+                    url, timeout=CUBE_LOAD_REQUEST_TIMEOUT, headers={"Authorization": token, **self._add_headers}
                 )
                 if response.status_code != 200:
                     self.log(
@@ -122,15 +114,9 @@ class CubeJsClient:
                         response=response.text,
                     )
                     if response.text:
-                        raise CubeError(
-                            "bad return status code: {} - {}".format(
-                                response.status_code, response.text
-                            )
-                        )
+                        raise CubeError("bad return status code: {} - {}".format(response.status_code, response.text))
                     else:
-                        raise CubeError(
-                            "bad return status code: {}".format(response.status_code)
-                        )
+                        raise CubeError("bad return status code: {}".format(response.status_code))
 
                 json_res = response.json()
 
@@ -146,9 +132,7 @@ class CubeJsClient:
                             status_code=response.status_code,
                             response=json_res,
                         )
-                        raise CubeError(
-                            "unrecognized error: {}".format(json_res["error"])
-                        )
+                        raise CubeError("unrecognized error: {}".format(json_res["error"]))
                 else:
                     self.log(
                         "info",
